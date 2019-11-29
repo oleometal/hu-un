@@ -1,4 +1,5 @@
 
+node_modules/
 # .v4p backup files
 *~.xml
 
