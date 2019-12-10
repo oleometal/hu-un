@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Javascript La Guia Definitiva Sexta Edicion</title>
+</head>
+<body>
+    <div>
+        <p>
+            <h2>7.8.6 splice()</h2> 
+            El método <code>Array.splice()</code> es un método de propósito general para insertar o eliminar
+elementos de una matriz. A diferencia de <code>slice()</code> y <code>concat()</code>, <code>splice()</code> modifica la matriz en
+que se invoca Tenga en cuenta que <code>splice()</code> y <code>slice()</code> tienen nombres muy similares pero realizan operaciones sustancialmente diferentes.
+<code>splice()</code> puede eliminar elementos de una matriz, insertar nuevos elementos en una matriz o realizar
+ ambas operaciones al mismo tiempo.Los elementos de la matriz que vienen después del punto de inserción o eliminación aumentan o disminuyen sus índices según sea necesario para que
+ permanezcan contiguos con el resto de la matriz. El primer argumento para <code>splice()</code> especifica
+la posición de la matriz en la que debe comenzar la inserción y / o eliminación. El segundo
+argumento especifica el número de elementos que deben eliminarse (dividirse)
+la matriz Si se omite este segundo argumento, todos los elementos de la matriz del elemento inicial
+al final de la matriz se eliminan. <code>splicegit()</code> devuelve una matriz de los elementos eliminados,
+o una matriz vacía si no se eliminaron elementos. Por ejemplo:
+        </p>
+        <code>
+            <pre>
+                var a = [1,2,3,4,5,6,7,8];
+                a.splice(4);    // Returns [5,6,7,8]; a is [1,2,3,4]
+                a.splice(1,2);  // Returns [2,3]; a is [1,4]
+                a.splice(1,1);  // Returns [4]; a is [1]
+            </pre>
+        </code>
+    </div>
+</body>
+</html>
