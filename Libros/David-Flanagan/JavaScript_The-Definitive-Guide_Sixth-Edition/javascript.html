@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Javascript La Guia Definitiva Sexta Edicion</title>
 </head>
+
 <body>
     <div>
         <p>
-            <h2>7.8.6 splice()</h2> 
+            <h3>7.8.6 splice()</h3>
             El método <code>Array.splice()</code> es un método de propósito general para insertar o eliminar
-elementos de una matriz. A diferencia de <code>slice()</code> y <code>concat()</code>, <code>splice()</code> modifica la matriz en
-que se invoca Tenga en cuenta que <code>splice()</code> y <code>slice()</code> tienen nombres muy similares pero realizan operaciones sustancialmente diferentes.
-<code>splice()</code> puede eliminar elementos de una matriz, insertar nuevos elementos en una matriz o realizar
- ambas operaciones al mismo tiempo.Los elementos de la matriz que vienen después del punto de inserción o eliminación aumentan o disminuyen sus índices según sea necesario para que
- permanezcan contiguos con el resto de la matriz. El primer argumento para <code>splice()</code> especifica
-la posición de la matriz en la que debe comenzar la inserción y / o eliminación. El segundo
-argumento especifica el número de elementos que deben eliminarse (dividirse)
-la matriz Si se omite este segundo argumento, todos los elementos de la matriz del elemento inicial
-al final de la matriz se eliminan. <code>splicegit()</code> devuelve una matriz de los elementos eliminados,
-o una matriz vacía si no se eliminaron elementos. Por ejemplo:
+            elementos de una matriz. A diferencia de <code>slice()</code> y <code>concat()</code>, <code>splice()</code>
+            modifica la matriz en
+            que se invoca Tenga en cuenta que <code>splice()</code> y <code>slice()</code> tienen nombres muy similares
+            pero realizan operaciones sustancialmente diferentes.
+            <code>splice()</code> puede eliminar elementos de una matriz, insertar nuevos elementos en una matriz o
+            realizar
+            ambas operaciones al mismo tiempo.Los elementos de la matriz que vienen después del punto de inserción o
+            eliminación aumentan o disminuyen sus índices según sea necesario para que
+            permanezcan contiguos con el resto de la matriz. El primer argumento para <code>splice()</code> especifica
+            la posición de la matriz en la que debe comenzar la inserción y / o eliminación. El segundo
+            argumento especifica el número de elementos que deben eliminarse (dividirse)
+            la matriz Si se omite este segundo argumento, todos los elementos de la matriz del elemento inicial
+            al final de la matriz se eliminan. <code>splicegit()</code> devuelve una matriz de los elementos eliminados,
+            o una matriz vacía si no se eliminaron elementos. Por ejemplo:
         </p>
         <code>
             <pre>
@@ -30,6 +36,140 @@ o una matriz vacía si no se eliminaron elementos. Por ejemplo:
                 a.splice(1,1);  // Returns [4]; a is [1]
             </pre>
         </code>
+        <p>
+            Los primeros dos argumentos para <code>splice()</code> especifican qué elementos de la matriz se deben
+            eliminar.
+            Estos argumentos pueden ser seguidos por cualquier número de argumentos adicionales que especifiquen
+            elementos que se insertarán en la matriz, comenzando en la posición especificada por el primer
+            argumento. Por ejemplo:
+            <code>
+                <pre>
+                var a = [1,2,3,4,5];
+                a.splice(2,0,'a','b'); // Returns []; a is [1,2,'a','b',3,4,5]
+                a.splice(2,2,[1,2],3); // Returns ['a','b']; a is [1,2,[1,2],3,3,4,5]
+                </pre>
+</code>
+            Tenga en cuenta que, a diferencia de <code>concat()</code>, <code>splice()</code> inserta matrices en sí, no
+            los elementos de esas matrices.
+        </p>
+    </div>
+    <div>
+        <h3>7.8.7 push() y pop() </h3>
+        <p>
+            Los métodos <code>push()</code> y <code>pop()</code> le permiten trabajar con matrices como si fueran pilas.
+            El método <code>push()</code> agrega uno o más elementos nuevos al final de una matriz y
+            devuelve la nueva longitud de la matriz. El método <code>pop()</code> hace lo contrario: elimina el
+            último elemento de una matriz, disminuye la longitud de la matriz y devuelve el valor que
+            remoto. Tenga en cuenta que ambos métodos modifican la matriz en su lugar en lugar de producir un
+            copia modificada de la matriz. La combinación de <code>push()</code> y <code>pop()</code> le permite usar un
+            Matriz de JavaScript para implementar una pila de primero en entrar, último en salir. Por ejemplo:
+            <code>
+    <pre>
+        var stack = [];    // stack: []
+        stack.push(1,2);   // stack: [1,2]     Returns 2
+        stack.pop();       // stack: [1]       Returns 2
+        stack.push(3);     // stack: [1,3]     Returns 2
+        stack.pop();       // stack: [1]       Returns 3
+        stack.push([4,5]); // stack: [1,[4,5]] Returns 2
+        stack.pop()        // stack: [1]       Returns [4,5]
+        stack.pop();       // stack: []        Returns 1
+    </pre>
+</code>
+        </p>
+    </div>
+    <div>
+
+        <h3>7.8.8 unshift() y shift()</h3>
+        <p>
+            Los métodos <code>unshift()</code> y <code>shift()</code> se comportan de manera similar a
+            <code>push()</code> y <code>pop()</code>,
+            excepto que insertan y eliminan elementos desde el principio de una matriz en lugar de desde el final.
+            <code>unshift()</code> agrega un elemento o elementos al comienzo de la matriz,
+            desplaza los elementos de la matriz existentes a índices más altos para hacer espacio y devuelve la nueva
+            longitud de la matriz.
+            <code>shift()</code> elimina y devuelve el primer elemento de la matriz,
+            desplazando todos los elementos subsiguientes hacia abajo un lugar para ocupar el espacio recientemente
+            vacante al comienzo de la matriz.
+            Por ejemplo:
+            <code>
+        <pre>
+                var a = [];           // a: []
+                a.unshift(1);         // a: [1]          Returns: 1
+                a.unshift(22);        // a: [22,1]       Returns: 2
+                a.shift();            // a: [1]          Returns: 22
+                a.unshift(3,[4,5]);   // a: [3,[4,5],1]  Returns: 3
+                a.shift();            // a: [[4,5],1]    Returns: 3
+                a.shift();            // a: [1]          Returns: [4,5]
+                a.shift();            // a: []           Returns: 1
+        </pre>
+    </code>
+            Tenga en cuenta el comportamiento posiblemente sorprendente de <code>unshift()</code> cuando se invoca con
+            múltiples argumentos.
+            En lugar de insertarse en la matriz de uno en uno, los argumentos se insertan de una vez (como con el método
+            <code>splice()</code> ).
+            Esto significa que aparecen en la matriz resultante en el mismo orden en que aparecieron en la lista de
+            argumentos.
+            Si los elementos se hubieran insertado uno a la vez, su orden se habría invertido.
+        </p>
+    </div>
+    <div>
+        <p>
+            <h3>7.8.9 toString() y toLocaleString()</h3>
+            Una matriz, como cualquier objeto JavaScript, tiene un método <code>toString()</code>. Para una matriz, este
+            método
+            convierte cada uno de sus elementos en una cadena (llamando a los métodos <code>toString()</code> de sus
+            elementos, si
+            es necesario) y genera una lista separada por comas de esas cadenas.
+            Tenga en cuenta que la salida no incluye corchetes ni ningún otro tipo de delimitador alrededor del valor de
+            la matriz. Por ejemplo:
+            <code>
+                <pre>
+                [1,2,3].toString()          // Produce '1,2,3'
+                ["a", "b", "c"].toString()  // Produce 'a,b,c'
+                [1, [2,'c']].toString()     // Produce '1,2,c'
+                </pre>
+            </code>
+            Tenga en cuenta que el método <code>join()</code> devuelve la misma cadena cuando se invoca sin argumentos.
+            <code>toLocaleString()</code> es la versión localizada de <code>toString()</code>. Convierte cada elemento
+            de la matriz en una
+            cadena al llamar al método <code>toLocaleString()</code> del elemento, y luego concatena las cadenas
+            resultantes
+            utilizando una cadena de separación local específica (y definida por la implementación).
+        </p>
+    </div>
+    <div>
+        <p>
+            <h2>7.9 ECMAScript 5 Métodos de matriz</h2>
+            ECMAScript 5 define nueve nuevos métodos de matriz para iterar, mapear, filtrar, probar, reducir y buscar
+            matrices. Las subsecciones a continuación describen estos métodos.<br></br>
+            Sin embargo, antes de cubrir los detalles, vale la pena hacer algunas generalizaciones sobre estos métodos
+            de matriz ECMAScript 5. Primero, la mayoría de los métodos aceptan una función como su primer argumento e
+            invocan esa función una vez para cada elemento (o algunos elementos) de la matriz. Si la matriz es escasa,
+            la función que pasa no se invoca para elementos inexistentes. En la mayoría de los casos, la función que
+            proporciona se invoca con tres argumentos: el valor del elemento de matriz, el índice del elemento de matriz
+            y la matriz misma. A menudo, solo necesita el primero de estos valores de argumento y puede ignorar los
+            valores segundo y tercero. La mayoría de los métodos de matriz ECMAScript 5 que aceptan una función como su
+            primer argumento aceptan un segundo argumento opcional. Si se especifica, la función se invoca como si fuera
+            un método de este segundo argumento. Es decir, el segundo argumento que pasa se convierte en el valor de la
+            palabra clave this dentro de la función que pasa. El valor de retorno de la función que pasa es importante,
+            pero diferentes métodos manejan el valor de retorno de diferentes maneras. Ninguno de los métodos de matriz
+            ECMAScript 5 modifica la matriz en la que se invoca. Si pasa una función a estos métodos, esa función puede
+            modificar la matriz, por supuesto.
+
+        </p>
+    </div>
+    <div>
+        <p>
+            <h3>7.9.1 forEach()</h3>
+            El método <code>forEach()</code> itera a través de una matriz, invocando una función que especifique para cada elemento.
+            Como se describió anteriormente, pasa la función como primer argumento a <code>forEach()</code>. <code>forEach()</code> invoca su
+            función con tres argumentos: el valor del elemento de matriz, el índice del elemento de matriz y la matriz
+            misma. Si solo te importa
+            el valor del elemento de matriz, puede escribir una función con solo un parámetro, los argumentos
+            adicionales serán ignorados:
+            
+        </p>
     </div>
 </body>
+
 </html>
