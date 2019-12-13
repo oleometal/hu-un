@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -161,13 +161,192 @@
     <div>
         <p>
             <h3>7.9.1 forEach()</h3>
-            El método <code>forEach()</code> itera a través de una matriz, invocando una función que especifique para cada elemento.
-            Como se describió anteriormente, pasa la función como primer argumento a <code>forEach()</code>. <code>forEach()</code> invoca su
+            El método <code>forEach()</code> itera a través de una matriz, invocando una función que especifique para
+            cada elemento.
+            Como se describió anteriormente, pasa la función como primer argumento a <code>forEach()</code>.
+            <code>forEach()</code> invoca su
             función con tres argumentos: el valor del elemento de matriz, el índice del elemento de matriz y la matriz
             misma. Si solo te importa
             el valor del elemento de matriz, puede escribir una función con solo un parámetro, los argumentos
             adicionales serán ignorados:
-            
+
+            <code>
+              <pre>
+                    var data = [1,2,3,4,5];                           // Una matriz para sumar
+                    // Calcule la suma de los elementos de la matriz.
+                    var sum = 0;                                      // Start at 0
+                    data.forEach(function(value) { sum += value; });  // Add each value to sum
+                    sum                                               // => 15
+                               
+                    // Now increment each array element
+                    data.forEach(function(v, i, a) { a[i] = v + 1; });
+                    data                                              // => [2,3,4,5,6]
+        
+              </pre>
+          </code>
+            Tenga en cuenta que <code>forEach()</code> no proporciona una forma de terminar la iteración antes de que
+            todos los
+            elementos hayan pasado a la función. Es decir, no existe un equivalente de la declaración de ruptura que
+            pueda usar con un ciclo for regular. Si necesita terminar antes, debe lanzar una excepción y colocar la
+            llamada a <code>forEach()</code> dentro de un bloque de prueba. El siguiente código define una función
+            <code>foreach()</code> que
+            llama al método <code>forEach()</code> dentro de dicho bloque <code>try</code> . Si la función pasada a
+            <code>foreach()</code> arroja
+            <code>foreach.break</code>, el ciclo terminará antes:
+            <code>
+            <pre>
+                    function foreach(a,f,t) {
+                        try { a.forEach(f,t); }
+                        catch(e) {
+                            if (e === foreach.break) return;
+                            else throw e;
+                            }
+                            }
+                            foreach.break = new Error("StopIteration");
+            </pre>
+        </code>
+        </p>
+    </div>
+    <div>
+        <p>
+            <h3>7.9.2 map()</h3>
+            El método <code>map()</code> pasa cada elemento de la matriz en la que se invoca a la función que
+            especifique, y
+            devuelve una matriz que contiene los valores devueltos por esa función. Por ejemplo:
+            <code>
+                    <pre>
+                            a = [1, 2, 3];
+                            b = a.map(function(x) { return x*x; });  // b is [1, 4, 9]
+                    </pre>
+                </code>
+            La función que pasa a <code>map()</code> se invoca de la misma manera que una función pasada a forEach ().
+            Sin embargo,
+            para el método <code>map()</code>, la función que pasa debe devolver un valor. Tenga en cuenta que
+            <code>map()</code> devuelve una
+            nueva matriz: no modifica la matriz en la que se invoca. Si esa matriz es escasa, la matriz devuelta será
+            escasa de la misma manera: tendrá la misma longitud y los mismos elementos faltantes.
+        </p>
+    </div>
+    <div>
+        <p>
+            <h3>7.9.3 filter()</h3>
+            El método <code>filter()</code> devuelve una matriz que contiene un subconjunto de los elementos de la
+            matriz en la que
+            se invoca. La función que le pasas debe ser predicado: una función que devuelve verdadero o falso. El
+            predicado se invoca como para <code>forEach()</code> y <code>map()</code>. Si el valor de retorno es
+            verdadero, o un valor que se
+            convierte en verdadero, entonces el elemento pasado al predicado es un miembro del subconjunto y se agrega a
+            la matriz que se convertirá en el valor de retorno. Ejemplos:
+            <code>
+                <pre>
+                        a = [5, 4, 3, 2, 1];
+                        smallvalues = a.filter(function(x) { return x < 3 });   // [2, 1]
+                        everyother = a.filter(function(x,i) { return i%2==0 }); // [5, 3, 1]
+                </pre>
+            </code>
+            Tenga en cuenta que <code>filter()</code> omite elementos faltantes en matrices dispersas y que su valor de
+            retorno es
+            siempre denso. Para cerrar las brechas en una matriz dispersa, puede hacer esto:
+            <code>
+                <pre>
+                        var dense = sparse.filter(function() { return true; });
+                </pre>
+            </code>
+            Y para cerrar huecos y eliminar elementos indefinidos y nulos, puede usar filtros como este:
+            <code>
+                <pre>
+                        a = a.filter(function(x) { return x !== undefined && x != null; });
+                </pre>
+            </code>
+        </p>
+    </div>
+    <div>
+        <p>
+            <h3>7.9.4 every() y some()</h3>
+            Los métodos <code>every()</code> y <code>some()</code> son predicados de matriz: aplican una función de
+            predicado que usted
+            especifica a los elementos de la matriz y luego devuelven <code>true</code> o <code>false</code>. El método
+            <code>every()</code> es como el
+            cuantificador matemático ∀ "para todos" devuelve: <code>true</code> si y solo si su función de predicado
+            devuelve verdadero para todos los elementos de la matriz:
+            <code>
+                <pre>
+                    a = [1,2,3,4,5];
+                    a.every(function(x) { return x < 10; })      // => true: all values < 10.
+                    a.every(function(x) { return x % 2 === 0; }) // => false: not all values even.
+                </pre>
+            </code>
+            El método <code>some()</code> es como el cuantificador matemático "existe" ∃: devuelve <code>true</code> si
+            existe al
+            menos un elemento en la matriz para el cual el predicado devuelve <code>true</code> y devuelve
+            <code>false</code> si y solo si el
+            predicado devuelve <code>false</code> para todos los elementos de la matriz:
+            <code>
+                <pre>
+                    a = [1,2,3,4,5];
+                    a.some(function(x) { return x%2===0; }) // => true a tiene algunos números pares.
+                    a.some(isNaN)                           // => false: a no tiene no números.
+                </pre>
+            </code>
+            Tenga en cuenta que ambos <code>every()</code> y <code>some()</code> dejan de iterar elementos de la matriz
+            tan pronto como saben
+            qué valor devolver. <code>some()</code> devuelve <code>true</code> la primera vez que su predicado devuelve
+            <code>true</code> y solo
+            itera a través de toda la matriz si su predicado siempre devuelve <code>false</code>. <code>every()</code>
+            es lo contrario: devuelve
+            <code>false</code> la primera vez que su predicado devuelve <code>false</code>, y solo itera todos los
+            elementos si su predicado
+            siempre devuelve <code>true</code>. Tenga en cuenta también que, por convención matemática,
+            <code>every()</code> devuelve
+            <code>true</code> y <code>some</code> devuelve <code>false</code> cuando se invoca en una matriz vacía.
+        </p>
+    </div>
+    <div>
+        <p>
+            <h3>7.9.5 reduce(), reduceRight()</h3>
+            Los métodos <code>reduce()</code> y <code>reduceRight()</code> combinan los elementos de una matriz,
+            utilizando la función que
+            especifique, para producir un solo valor. Esta es una operación común en la programación funcional y también
+            se conoce con los nombres "inyectar" y "doblar". Los ejemplos ayudan a ilustrar cómo funciona:
+            <code>
+                <pre>
+                    var a = [1,2,3,4,5]
+                    var sum = a.reduce(function(x,y) { return x+y }, 0);     // Sum of values
+                    var product = a.reduce(function(x,y) { return x*y }, 1); // Product of values
+                    var max = a.reduce(function(x,y) { return (x>y)?x:y; }); // Largest value
+                </pre>
+            </code>
+            <code>reduce()</code> toma dos argumentos. La primera es la función que realiza la operación de reducción.
+            La tarea de
+            esta función de reducción es de alguna manera combinar o reducir dos valores en un solo valor, y devolver
+            ese valor reducido. En los ejemplos anteriores, las funciones combinan dos valores agregándolos,
+            multiplicándolos y eligiendo el más grande. El segundo argumento (opcional) es un valor inicial para pasar a
+            la función. <br><br>
+            Las funciones utilizadas con <code>reduce()</code> son diferentes a las funciones utilizadas con
+            <code>forEach()</code> y <code>map()</code>. El
+            valor familiar, el índice y los valores de la matriz se pasan como segundo, tercer y cuarto argumento. El
+            primer argumento es el resultado acumulado de la reducción hasta ahora.
+            En la primera llamada a la función, este primer argumento es el valor inicial que pasó como segundo
+            argumento para <code>reduce()</code>. En llamadas posteriores, es el valor devuelto por la invocación previa
+            de la
+            función. En el primer ejemplo anterior, la función de reducción es
+            primero se llama con los argumentos 0 y 1. Agrega estos y devuelve 1. Luego se vuelve a llamar con los
+            argumentos 1 y 2 y devuelve 3. Luego calcula 3 + 3 = 6, luego 6 + 4 = 10 y finalmente 10+ 5 = 15. Este valor
+            final, 15, se convierte en el valor de retorno de <code>reduce()</code>. <br> <br>
+            Es posible que haya notado que la tercera llamada a <code>reduce()</code> anterior tiene un solo argumento:
+            no se
+            especifica ningún valor inicial. Cuando invocas <code>reduce()</code> como este sin valor inicial, usa el
+            primer
+            elemento de la matriz como valor inicial. Esto significa que la primera llamada a la función de reducción
+            tendrá el primer y el segundo elemento de matriz como su primer y segundo argumento. En los ejemplos de suma
+            y producto anteriores, podríamos haber omitido el argumento del valor inicial. <br><br>
+            Llamar a <code>reduce()</code> en una matriz vacía sin argumento de valor inicial provoca un TypeError. Si
+            lo llama con
+            un solo valor, ya sea una matriz con un elemento y sin valor inicial o una matriz vacía y un valor inicial,
+            simplemente devuelve ese valor sin llamar a la función de reducción. <br><br>
+            <code>reduceRight()</code> funciona igual que <code>reduce()</code>, excepto que procesa la matriz desde el índice más alto al más
+            bajo (de derecha a izquierda), en lugar de desde el más bajo al más alto. Es posible que desee hacer esto si
+            la operación de reducción tiene prioridad de derecha a izquierda, por ejemplo:
         </p>
     </div>
 </body>
