@@ -344,9 +344,22 @@
             lo llama con
             un solo valor, ya sea una matriz con un elemento y sin valor inicial o una matriz vacía y un valor inicial,
             simplemente devuelve ese valor sin llamar a la función de reducción. <br><br>
-            <code>reduceRight()</code> funciona igual que <code>reduce()</code>, excepto que procesa la matriz desde el índice más alto al más
+            <code>reduceRight()</code> funciona igual que <code>reduce()</code>, excepto que procesa la matriz desde el
+            índice más alto al más
             bajo (de derecha a izquierda), en lugar de desde el más bajo al más alto. Es posible que desee hacer esto si
             la operación de reducción tiene prioridad de derecha a izquierda, por ejemplo:
+            <code>
+                <pre>
+                    var a = [2, 3, 4]
+                    // Compute 2^(3^4). Exponentiation has right-to-left precedence
+                    var big = a.reduceRight(function(accumulator,value) {
+                                                return Math.pow(value,accumulator);
+                                            });
+                </pre>
+            </code>
+            Tenga en cuenta que ni <code>reduce()</code> ni <code>reduceRight()</code> acepta un argumento opcional que especifica el valor en
+            el que se invoca la función de reducción. El argumento opcional del valor inicial toma su lugar. Consulte el
+            método <code>Function.bind()</code> si necesita invocar su función de reducción como método de un objeto en particular.
         </p>
     </div>
 </body>
