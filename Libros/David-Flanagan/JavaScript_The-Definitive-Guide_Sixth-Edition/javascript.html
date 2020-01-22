@@ -10,6 +10,18 @@
 
 <body>
     <div>
+        <p id="E6-2">
+            El ejemplo 6-2 define funciones de utilidad que usan bucles <code>for/in</code> para manipular objetos
+            propuestos.
+            Erties de maneras útiles. La función <code>extend()</code>, en particular, es una que es comúnmente
+            incluido en las bibliotecas de utilidades de JavaScript.<sup>2</sup>
+        </p>
+        <footer>
+            2. La implementación de <code>extend()</code> que se muestra aquí es correcta pero no compensa un error conocido en
+            Internet Explorer. Veremos una versión más robusta de <code>extend()</code> en el Ejemplo 8-3.
+        </footer>
+    </div>
+    <div>
         <p>
             <h3>7.8.6 splice()</h3>
             El método <code>Array.splice()</code> es un método de propósito general para insertar o eliminar
@@ -357,9 +369,25 @@
                                             });
                 </pre>
             </code>
-            Tenga en cuenta que ni <code>reduce()</code> ni <code>reduceRight()</code> acepta un argumento opcional que especifica el valor en
+            Tenga en cuenta que ni <code>reduce()</code> ni <code>reduceRight()</code> acepta un argumento opcional que
+            especifica el valor en
             el que se invoca la función de reducción. El argumento opcional del valor inicial toma su lugar. Consulte el
-            método <code>Function.bind()</code> si necesita invocar su función de reducción como método de un objeto en particular.
+            método <code>Function.bind()</code> si necesita invocar su función de reducción como método de un objeto en
+            particular.<br><br>
+            Vale la pena señalar que los métodos <code>every ()</code> y <code>some ()</code> descritos anteriormente
+            realizan un tipo
+            de operación de reducción de matriz. Sin embargo, difieren de <code>reduce ()</code> en que terminan
+            temprano cuando sea posible, y no siempre visite todos los elementos de la matriz.<br><br>
+            <p>
+                Los ejemplos mostrados hasta ahora han sido numéricos por simplicidad, pero <code>reduce()</code> y
+                <code>reduceRight()</code>
+                no están destinados únicamente a cálculos matemáticos. Considere la función <code>union()</code> del <a
+                    href="#E6-2">Ejemplo 6-2</a>.
+                Calcula la "unión" de dos objetos y devuelve un nuevo objeto que tiene las propiedades de ambos. Esta
+                función espera dos objetos y devuelve otro objeto, por lo que funciona como una función de reducción, y
+                podemos usar <code>reduce()</code> para generalizarlo y calcular la unión de cualquier número de
+                objetos:
+            </p>
         </p>
     </div>
 </body>
