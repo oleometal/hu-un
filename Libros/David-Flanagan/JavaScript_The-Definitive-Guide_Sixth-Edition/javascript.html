@@ -17,7 +17,8 @@
             incluido en las bibliotecas de utilidades de JavaScript.<sup>2</sup>
         </p>
         <footer>
-            2. La implementación de <code>extend()</code> que se muestra aquí es correcta pero no compensa un error conocido en
+            2. La implementación de <code>extend()</code> que se muestra aquí es correcta pero no compensa un error
+            conocido en
             Internet Explorer. Veremos una versión más robusta de <code>extend()</code> en el Ejemplo 8-3.
         </footer>
     </div>
@@ -388,7 +389,87 @@
                 podemos usar <code>reduce()</code> para generalizarlo y calcular la unión de cualquier número de
                 objetos:
             </p>
+
         </p>
+        <code>
+            <pre>
+                var objet = [{x:1}, {y:2},{z:3}];
+                var merged = objects.reduce(union);  // => {x:1, y:2, z:3}
+            </pre>
+        </code>
+        <p>
+            Recuerde que cuando dos objetos tienen propiedades con el mismo nombre, la función <code>union()</code> usa
+            el valor de
+            esa propiedad del primer argumento. Por lo tanto <code>reduce()</code> y <code>reduceRight()</code> pueden
+            dar resultados
+            diferentes cuando se usan con <code>union()</code>:
+        </p>
+        <code>
+            <pre>
+                var objects = [{x:1,a:1},{y:2,a:2},{z:3,a:3}];
+                var leftunion = objects.reduce(union);       // {x:1, y:2, z:3, a:1}
+                var rightunion = objects.reduceRight(union); // {x:1, y:2, z:3, a:3}
+
+            </pre>
+        </code>
+    </div>
+    <div>
+        <p>
+            <h3>
+                7.9.6 indexOf() and lastIndexOf()
+            </h3>
+
+        </p>
+        <p>
+            <code>indexOf()</code> y <code>lastIndexOf()</code> buscan en una matriz un elemento con un valor
+            especificado y devuelven el índice
+            del primer elemento encontrado, o –1 si no se encuentra ninguno. <code>indexOf()</code> busca la matriz de
+            principio a
+            fin, y <code>lastIndexOf()</code> busca de fin a principio.
+        </p>
+        <code>
+            <pre>
+                a = [0,1,2,1,0];
+                a.indexOf(1)         // => 1: a[1] is 1
+                a.lastIndexOf(1)     // => 3: a[3] is 1
+                a.indexOf(3)         // => -1: no element has value 3
+                                
+            </pre>
+        </code>
+        <p>
+            A diferencia de los otros métodos descritos en esta sección, <code>indexOf()</code> y
+            <code>lastIndexOf()</code> no toman un
+            argumento de función. El primer argumento es el valor a buscar. El segundo argumento es opcional: especifica
+            el índice de matriz en el que comenzar la búsqueda. Si se omite este argumento, <code>indexOf()</code>
+            comienza al
+            principio y <code>lastIndexOf()</code> comienza al final. Los valores negativos se permiten para el segundo
+            argumento y
+            se tratan como un desplazamiento desde el final de la matriz, como lo son para el método
+            <code>splice()</code>: un valor
+            de –1, por ejemplo, especifica el último elemento de la matriz.
+        </p>
+        <p> La siguiente función busca en una matriz un valor especificado y devuelve una matriz de <em>todos</em> los índices
+            coincidentes. Esto demuestra cómo se puede usar el segundo argumento para <code>indexOf()</code> para encontrar
+            coincidencias más allá del primero.
+        </p>
+        <code>
+            <pre>
+                // Find all occurrences of a value x in an array a and return an array
+                // of matching indexes
+                function findall(a, x) {
+                var results = [],               // The array of indexes we'll return
+                    len = a.length,             // The length of the array to be searched
+                    pos = 0;                    // The position to search from
+                while(pos < len) {              // While more elements to search...
+                    pos = a.indexOf(x, pos);    // Search
+                    if (pos === -1) break;      // If nothing found, we're done.
+                    results.push(pos);          // Otherwise, store index in array
+                    pos = pos + 1;              // And start next search at next element
+                }
+                return results;                 // Return array of indexes
+                }
+            </pre>
+        </code>
     </div>
 </body>
 
