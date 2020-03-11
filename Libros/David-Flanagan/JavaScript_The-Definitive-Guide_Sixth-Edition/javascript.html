@@ -470,7 +470,23 @@
                 }
             </pre>
         </code>
+        <p>
+            Tenga en cuenta que las cadenas tienen métodos <code>indexOf()</code>  y <code>lastIndexOf()</code> que funcionan como estos métodos de matriz.
+        </p>
     </div>
+    <p>
+                <h3>
+                    7.10 Array Type
+                </h3>
+                Hemos visto a lo largo de este capítulo que las matrices son objetos con un comportamiento especial. Dado un objeto desconocido, a menudo es útil poder determinar si es una matriz o no. En ECMAScript 5, puede hacer esto con la función <code>Array.isArray()</code> :
+                <code>
+                    <pre>
+                        Array.isArray([])   // => true
+                        Array.isArray({})   // => false       
+
+                    </pre>
+                </code>
+            </p>
 </body>
 
 </html>
